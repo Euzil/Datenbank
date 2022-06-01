@@ -1,0 +1,28 @@
+\documentclass{scrartcl}
+\include{uses}
+
+\title{Zusammenfassung - DB}
+\author{Tim Hardow}
+\date{16. Februar 2022}
+
+\usepackage{wasysym}
+\begin{document}
+
+\maketitle
+
+\section{Relationales Datenmodell}
+\subsection{Funktionale Abhängigkeiten}
+Seien $\alpha \subseteq \mathcal{R}, \beta \subseteq \mathcal{R}$\\
+$\alpha \to \beta$ genau dann wenn $\forall r, s \in \mathcal{R}$ mit $r.\alpha = s.\alpha \Rightarrow r.\beta = s.\beta$
+\subsection{Superschlüssel}
+$\alpha$ ist Superschlüssel, falls $\alpha \to \mathcal{R}$ gilt
+\subsection{Voll funktional abhängig}
+$\beta$ ist voll funktional abhängig von $\alpha$ falls\\
+$\alpha \to \beta$
+und $\alpha$ kann nicht verkleinert werden ohne das nicht mehr $\alpha \to \beta$ gilt.\\
+Geschrieben wird $\alpha \to \overset{\newmoon}{{\color{white}a}} \beta$
+\subsection{Kandidatenschlüssel}
+$\alpha$ ist Kandidatenschlüssel, falls $\alpha \to \overset{\newmoon}{{\color{white}a}} \mathcal{R}$
+\subsection{Armstrong}
+
+\end{document}

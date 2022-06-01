@@ -1,0 +1,40 @@
+\documentclass{scrartcl}
+\include{uses}
+
+\DBTitel{3}
+
+\begin{document}
+
+\maketitle
+\section{Armstrong-Axiome}
+\begin{enumerate}
+\item
+    \begin{enumerate}
+    \item \textbf{Reflexivität:} Wenn $\beta \subseteq \alpha$, dann $\alpha \to \beta$.
+    \item \textbf{Verstärkung:} Wenn $\alpha \to \beta$, dann $\alpha \gamma \to \beta \gamma $
+    \item \textbf{Transitivität:} Wenn $\alpha \to \beta$ und $\beta \to \gamma$, dann $\alpha \to \gamma$
+    \end{enumerate}
+\item 
+    \begin{enumerate}
+    \item \textbf{Korrektheit} bedeutet, dass sich mittels Armstrongkalkül kein FD bilden lässt, welcher sich nicht aus F ableitet.
+    \item \textbf{Vollständigkeit} beutetet, dass sich jeder FD, welcher sich aus F ableitet, auch durch das Armstrongkalkül bilden lassen muss.
+    \end{enumerate}
+\item
+    \textbf{Pseudotransitivität:} Wenn $\alpha \to \beta$ und $\gamma \beta \to \delta$, dann gilt auch $\alpha \gamma \to \delta$
+    
+    Man kann die Transitivität nicht durch die Pseudotransitivität tauschen, da Pseudotransitivität nur eine Teilmenge der Transitivitäten abdeckt. Es lässt sich aus Reflexivität, Verstärkung und Pseudotransitivität keine Transitivität ableiten. Transitivität gilt nur, wenn $\alpha \to \gamma$ gilt, was allgemein nicht der Fall ist. Somit wäre das Armstrongkalkül nicht mehr Vollständig.
+\end{enumerate}
+\section{Verlustlose Zerlegungen}
+\begin{enumerate}
+    \item Verlustlosigkeit bedeutet, dass sich jede Zerlegung durch Join-Operationen wieder in die Ursprüngliche Form bringen lässt und keine Information verloren geht.
+    \item Die hinreichende Bedingung besagt, dass wenn aus dem Schnitt der FD's der Zerlegungsprodukte die FD's des einen oder des anderen Produktes folgen, die Zerlegung verlustfrei ist.
+    \item Es ist möglich, dass der Schnitt aus den FD's der Relationen leer ist (und man somit aus ihm nichts folgern kann), aber dennoch Verlustlosigkeit gegeben ist (Beispiel Vorlesung 9.11 Folie 23). Somit ist die hinreichende Bedingung verletzt und dennoch Verlustlosigkeit gegeben ist.
+\end{enumerate}
+
+\section{Normalformen}
+\begin{enumerate}
+    \item Diese Aussage ist falsch, da aus den höheren Normalformen die niederen folgen, liegt jede Datenbank in der höchsten NF sowie in allen darunterliegenden NF's vor. Z.B. würde eine Datenbank in der BCNF ist, so wäre sie auch in der ersten, zweiten und dritten NF.
+    \item Diese Aussage ist wahr, da Verlustlosigkeitsverletzungen immer zu Fehlern führen und die Datenbank unbrauchbar machen, wohingegen Abhängigkeitsverletzungen nur bei speziellen Tupeln zu Fehlern führen.
+    \item Diese Aussage ist wahr, da $\alpha \twoheadrightarrow \beta$ bedeutet, dass es zu zwei Tupeln mit gleichem $\alpha$ zwei weitere Tupel mit getauschten $\beta$ und $\gamma$ Werten geben muss. Da $\alpha \to \beta$ aber erzwingt, dass es solche zwei Tupel nicht geben kann, gilt die Aussage.
+\end{enumerate}
+\end{document}

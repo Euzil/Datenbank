@@ -1,0 +1,50 @@
+\documentclass{scrartcl}
+\include{uses}
+
+\DBTitel{1}
+
+\begin{document}
+
+\maketitle
+
+\section{Verständnisfragen}
+\begin{enumerate}
+    \item Ohne Zusatzwissen bleibt bei gut umgesetzter k-Anonymität die Anonymität immer erhalten. Hat man jedoch Zusatzwissen (3-Anonymität und man kennt 2 Datenpunkte) kann man die Anonymität brechen.
+    \item Falsch, da der ``DISTINCT''-Befehl alle vorhandenen A1 aus T1 ausgeben würde, wobei die Mehrfachvorkommen gestrichen werden.
+    \item Da Checks eingrenzen welche Werte in eine Zelle können, stimmt diese Aussage.
+    \item Da der Befehl eine reine Lese-Operation ist wird die Tabelle nicht verändert und es kann nicht zu einer Integritätsverletzung kommen.
+    \item Ja dies ist möglich, man kann eine View definieren und diese dann später ohne Probleme wie eine Tabelle benutzen, sodass diese wie eine zusammengefasste Anfrage ist. 
+    \item Die Aussage stimmt, da eine View eine zusammengefasste Anfrage darstellt. Es ist jedoch zu beachten, dass diese Anfrage bei jedem Aufruf der View ausgeführt wird und nicht nur bei ihrer Erstellung.
+    \item Das stimmt nicht. Es dürfen z.B. keine Duplikateliminierung oder Gruppierungen enthalten sein.
+\end{enumerate}
+\section{Umgang mit SQL-Anfragen}
+
+\begin{enumerate}
+    \item ProfV:
+\begin{lstlisting}[language=sql]
+CREATE VIEW ProfV AS 
+SELECT p.Note, p.VorlNr, p.MatrNr, s.Name, s.Semester
+FROM prüfen p, Studenten s 
+WHERE p.MatrNr = s.MatrNr 
+\end{lstlisting}
+    \item TutorV:
+\begin{lstlisting}[language=sql]
+CREATE VIEW TutorV AS 
+SELECT Note, VorlNr, MatrNr
+FROM prüfen
+\end{lstlisting}
+    \item StudentV:
+\begin{lstlisting}[language=sql]
+CREATE VIEW StudentV AS 
+SELECT AVG(Note)
+FROM prüfen
+\end{lstlisting}
+    \item Da es mehr als eine Basisrelation gibt, kann man der View ProfessorV keine Einträge hinzufügen.
+    \item Diese Eingrenzung ist möglich indem man folgenden Domain verwendet:
+\begin{lstlisting}[language=sql]
+CREATE DOMAIN rang STRING
+CONSTRAINT onlyC234 CHECK (VALUE IN ('C2','C3','C4'))
+\end{lstlisting}
+\end{enumerate}
+
+\end{document}

@@ -1,0 +1,81 @@
+\documentclass{scrartcl}
+\include{uses}
+
+\DBTitel{2}
+
+\begin{document}
+
+\maketitle
+
+\section{Relationales Modell}
+\subsection{Bei der relationalen Darstellung eines ER-Diagrams
+werden nur Beziehungstypen als Relationsschemata dargestellt}
+Falsch.
+
+Es werden Beziehungen sowie Entitäten als Relationsschemata dargestellt.
+
+\subsection{Bei der relationalen Darstellung von Beziehungstypen
+werden Fremdschlüssel benutzt.}
+Richtig.
+
+Zum darstellen von Beziehungstypen werden Fremdschlüssel als Attribut in das Relationschemata einer Entität oder einer Beziehung eingefügt.
+
+\section{Funktionale Abhängigkeiten}
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+    \hline
+    A & B & C & D\\
+    \hline\hline
+    $a_4$ & $b_2$ & $c_4$ & $d_3$\\
+    \hline
+    $a_1$ & $b_1$ & $c_1$ & $d_1$\\
+    \hline
+    $a_1$ & $b_1$ & $c_1$ & $d_2$\\
+    \hline
+    $a_2$ & $b_2$ & $c_3$ & $d_2$\\
+    \hline
+    $a_3$ & $b_2$ & $c_4$ & $d_3$ \\
+    \hline
+\end{tabular}    
+\end{center}
+\begin{enumerate}
+\item $\{B\} \to \{A\}$
+
+Falsch: $b_2$ kommt 3-mal vor, hat jedoch immer verschiedene a's in den entsprechenden Zeilen.
+\item $\{B\} \to \{C, D\}$
+
+Falsch: $b_2$ kommt 3-mal vor, hat jedoch immer verschiedene Kombinationen von c's und d's in den entsprechenden Zeilen.
+\item $\{C, D\}$ ist ein Schlüssel
+
+Falsch: $c_4$ und $d_3$ kommen in zwei Zeilen vor. Schlüssel müssen jedoch eindeutig sein.
+\item $\{A, B, C, D\}$ ist ein Schlüssel
+
+Richtig: Eine komplette Zeile muss einzigartig sein. Daher sind komplette Zeilen immer Schlüssel.
+\item $\{B, D\}$ ist ein Kandidatenschlüssel.
+
+Falsch: Da die Kombination $b_2$ und $d_3$ in zwei Zeilen vorkommt, ist $\{B, D\}$ nicht eindeutig und kann somit kein Kandidatenschlüssel sein.
+\item $\{A, C, D\}$ ist ein Kandidatenschlüssel
+
+Falsch: Es gilt $\{ A\} \to \{ C\}$ und somit ist $\{A, C, D\}$ nicht minimal und kann kein Kandidatenschlüssel sein.
+\end{enumerate}
+
+\section{Relationale Algebra}
+Seien $r = (r_1,\ldots,r_n), s = (s_1, \ldots, s_n), q = (q_1, \ldots, q_n)$
+\subsection{Es gilt die Distributivität von $\times$ über $\cup$:
+$R \times (S \cup Q) = (R \times S) \cup (R \times Q)$}
+Diese Aussage ist Richtig. Beweis:
+\[(R \times S) \cup (R \times Q)\]
+\[= \{(r,s)\ |\ r \in R \wedge s \in S\} \cup \{(r,q)\ |\ r \in R \wedge q \in Q\}\] 
+\[ = \{x\ |\ [x \in \{(r,s)\ |\ r \in R \wedge s \in S\}] \vee [x \in \{(r,q)\ |\ r \in R \wedge q \in Q\}]\}\]
+\[ = \{(r,x)\ |\ r \in R \wedge (x \in S \vee x \in Q)\}\]
+\[= \{(r,x)\ |\ r \in R \wedge x \in S \cup Q\}\]
+\[ = R \times (S \cup Q)\] \qed
+\subsection{Selektionsoperationen kommutieren: $\sigma_{\theta_1}(\sigma_{\theta_2}(R))=\sigma_{\theta_2}(\sigma_{\theta_1}(R))$}
+Diese Aussage ist auch Richtig. Es gilt der folgende Beweis:
+\[\sigma_{\theta_1}(\sigma_{\theta_2}(R)) = \{r \in \sigma_{\theta_2}(R)\ |\ \theta_1(r)\} = \{r \in \{ r \in R\ |\ \theta_2(r)\}\ |\ \theta_1(r)\}\]\[ = \{r \in R\ |\ \theta_1(r) \wedge \theta_2(r)\}\]
+
+\[\sigma_{\theta_2}(\sigma_{\theta_1}(R)) = \{r \in \sigma_{\theta_1}(R)\ |\ \theta_2(r)\} = \{r \in \{ r \in R\ |\ \theta_1(r)\}\ |\ \theta_2(r)\}\]\[ = \{r \in R\ |\ \theta_2(r) \wedge \theta_1(r)\}\]
+Da \[\{r \in R\ |\ \theta_1(r) \wedge \theta_2(r)\} = \{r \in R\ |\ \theta_2(r) \wedge \theta_1(r)\}\] gilt \[\sigma_{\theta_1}(\sigma_{\theta_2}(R))=\sigma_{\theta_2}(\sigma_{\theta_1}(R)) \]\qed
+
+
+\end{document}

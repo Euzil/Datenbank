@@ -1,0 +1,57 @@
+\documentclass{scrartcl}
+\include{uses}
+
+\DBTitel{10}
+
+\begin{document}
+
+\maketitle
+
+\section{Verständnisfragen}
+\begin{itemize}
+    \item\textbf{Eine Datalog-Regel mit einem leeren Rumpf ist nicht zulässig.}
+    
+    Diese Aussage ist falsch, denn eine Datalog-Regel mit leerem Rumpf entspricht einer Tautologie.
+    \item \textbf{Um unendliche Antwortmengen zu verhindern wird gefordert, dass Variablen im Rumpf auch im Kopf der Regel vorkommen.}
+    
+    Um unendliche Antwortmengen zu verhindern, müssen Variablen aus dem Kopf auch im Rumpf vorkommen. Da dies umgedreht jedoch nicht der Fall ist, ist die Aussage falsch.
+    \item\textbf{Die Regel $U(x,y,z):-\, \neg L(x,y), M(x,z), N(y)$ ist sicher.}
+    
+    Diese Aussage ist korrekt. Die Antwortmenge ist endlich, da alle Variablen im Kopf ebenfalls im Rumpf vorkommen.
+    \item \textbf{Ein endliches Stratum bedeutet, dass im Stratum-Graph kein Kreis mit Negation vorkommt.}
+    
+    Da man für das Stratum die Menge an Negationskanten beim auswerten eines Prädikates zählt und diese bei einem Kreis mit enthaltener Negation unendlich sein können, ist diese Aussage korrekt.
+    \item \textbf{Bei der seminaiven Evaluation werden für alle IDB-Prädikate jeweils nur die neu hinzugekommenen Fakten zwischengespeichert}
+    
+    Die Aussage ist falsch, da zusätzlich zu den in der letzten Runde neu dazu gekommenen Fakten ebenfalls alle Fakten zu einem Prädikat ebenfalls gespeichert werden, da man auch ältere Daten brauchen könnte.
+\end{itemize}
+\section{Anfragen über ein Busnetz}
+\begin{enumerate}
+\item Übernächste Haltestelle:\\
+\begin{lstlisting}
+istÜbernächsteHaltestelle(X,Y) :- istFolgeHaltestelle(X,Z), istFolgeHaltestelle(Z,Y)
+\end{lstlisting}
+\item Erreichbarkeit:\\
+\begin{lstlisting}
+istErreichbar(X,Y) :- istFolgeHaltestelle(X,Y)
+istErreichbar(X,Y) :- istErreichbar(X,Z), istErreichbar(Z,Y)
+\end{lstlisting}
+\end{enumerate}
+\section{Sicher und stratifiziert}
+\begin{enumerate}
+    \item Das Programm ist sicher, da alle Variablen (hier X) aus dem Kopf auch im Rumpf vorhanden sind. 
+    \item Stratumgraph:\\
+    \begin{tikzpicture}
+    \node[shape=circle,draw=black] at (0,0) (A) {A};
+    \node[shape=circle,draw=black] at (2,0) (B) {B};
+    \node[shape=circle,draw=black] at (1,-1.44) (Q) {Q};
+    \path[->]
+        (A) edge[bend left] node[above] {neg} (B)
+        (B) edge node[below] {neg} (A)
+        (A) edge node[above] {} (Q)
+        (B) edge node[above] {} (Q);
+    \end{tikzpicture}
+    
+    Wie man an dem Stratumgraph erkennen kann, gibt es einen Kreislauf mit Negationen. Folglich ist das Programm nicht stratifiziert.
+\end{enumerate}
+\end{document}

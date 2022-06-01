@@ -1,0 +1,32 @@
+\documentclass{scrartcl}
+\include{uses}
+
+\DBTitel{7}
+
+\begin{document}
+
+\maketitle
+
+\section{Verständnisfragen zu Indexen}
+\begin{enumerate}
+    \item \textbf{Ein ISAM-Index verweist auf den höchsten Schlüssel eines Datenblockes der Hauptdatei, die aufsteigend sortiert ist.}
+    
+    Falsch, denn ein ISAM-Index gibt immer die ``Zwischenräume'' zwischen zwei Datenblöcken an. Das bedeutet er ist die obere (exklusive) Grenze für den linken und die untere (inklusive) Grenze für den rechten Datenblock. 
+    \item \textbf{Bei der Verwendung einer indexsequentiellen Zugriffsmethode müssen stark wachsende oder sich verändernde Dateien zeitaufwändig regelmäßig reorganisiert werden.}
+    
+    Stimmt, da der ISAM-Index degeneriert und bei stark wachsenden Datenbanken sehr häufig Überlaufseiten erzeugt werden und der Index folglich reorganisiert werden muss.
+    \item \textbf{Eine Datei kann mehrere verschiedene Indizes haben, aber nicht mehr als einen geclusterten Index.}
+    
+    Diese Aussage stimmt, da mehrere Indizes auf einen geclusterten Index zeigen können, aber eine Datei nur einen geclusterten Index haben kann, da dieser eindeutig einer Datei zuordenbar sein muss.
+    \item \textbf{Um einen zunehmenden Aufwand zur Kollisionsauflösung zu vermeiden, wird beim Dynamischen Hashing die Hashtabelle bei Bedarf vergrößert.}
+    
+    Diese Aussage stimmt, da bei zu kleinem n der Aufwand zur Kollisionsauflösung sehr groß wird wird und durch dynamisches Hashing hier Abhilfe geschaffen wird.
+    \item \textbf{Bei B$^+$-Bäumen werden auch in inneren Knoten tatsächliche Daten abgespeichert.}
+    
+    In inneren Knoten werden lediglich Indizes der darunter liegenden Blöcke abgespeichert und keine ``tatsächlichen'' Daten. Somit ist die Aussage falsch.
+    \item \textbf{B$^+$-Indexierung ist für Bereichsanfragen (in Datenbanksystem) optimal geeignet.}
+    
+    Diese Aussage stimmt nur für geclusterte B$^+$ Bäume, da man hier einfach sequentiell lesen kann. Für allgemeine B$^+$ Bäume gilt das aber nicht, da die Bereiche hier stark fragmentiert vorliegen könnten.
+\end{enumerate}
+
+\end{document}

@@ -1,0 +1,83 @@
+\documentclass{scrartcl}
+\include{uses}
+
+\DBTitel{6}
+
+\begin{document}
+
+\maketitle
+
+\section{Verständnisfragen}
+\begin{enumerate}
+    \item \textbf{Wird eine Seite nicht mehr im Puffer benötigt, so wird sie immer auf den Hauptspeicher zurückgeschrieben:}
+    
+    Wird eine Seite nicht mehr benötigt, dann kann sie bei einem vollen Puffer von einer anderen Seite verdrängt werden. Erst wenn das passiert wird die Seite zurückgeschrieben. Sollte es allerdings keine Änderungen an der Seite gegeben haben (die Seite ist nicht ``dirty''), so muss nicht zurückgeschrieben werden und die Seite im Hauptspeicher wird einfach überschrieben.\\Da das zurückschreiben nicht zwangsweise sofort und außerdem auf der Festplatte passiert ist die Aussage falsch.
+    \item \textbf{Durch die Anfrageplanung (request scheduling) kann es zu Veränderungen der Reihenfolge von Blockanfragen kommen:}
+    
+    Die Anfrageplanung bewirkt, dass bei mehreren Blockanfragen immer der Block zuerst gelesen wird, der von dem Lesekopf am schnellsten erreicht werden kann. \\
+    Dadurch kann es zu einer Veränderung der Reihenfolge des Lesens von Blöcken kommen. Somit ist die Aussage richtig. 
+    \item \textbf{Die Größe von einzelnen Seiten ist dynamisch:}
+    
+    Die Seitengrößen sind statisch, da sich dies einfacher verwalten lässt. Somit ist die Aussage falsch.
+\end{enumerate}
+\section{Sequentieller / Wahlfreier Zugriff}
+\begin{enumerate}
+    \item \textbf{Erläutern Sie den Unterschied zwischen wahlfreiem und sequentiellem Zugriff:}
+    
+    Wenn mehrere Blöcke gelesen werden sollen, versteht man unter wahlfreien Zugriff, dass der Lesekopf zuerst den ersten Block ließt, danach den zweiten und so weiter. Jedes mal muss der Lesekopf erst den Block suchen und hin navigieren, was Zeit kostet. \\
+    Wenn jedoch diese zu lesenden Blöcke in einer Spur hintereinander angeordnet sind, können die Blöcke sequenziell vom Lesekopf hintereinander gelesen werden, somit muss nur jeweils die richtige Spur gesucht werden. Dies nennt man dann den sequenziellen Zugriff. 
+    \item \textbf{Nennen Sie einen Vorteil vom sequentiellen Zugriff gegenüber dem wahlfreien Zugriff:}
+    
+    Da bei sequentiellem Lesen weit weniger Suchzeit gebraucht wird, sind entsprechende Anfragen wesentlich schneller.
+    \item \textbf{Wodurch setzten sich die Zugriffszeiten bei sequentiellem / wahlfreiem Zugriff zusammen?}
+    
+    Die Zugriffszeit für ein wahlfreien Zugriff, wird durch die Zugriffszeit eines einzelnen Blocks und multipliziert mit der Anzahl an zu lesenden Blöcken festgelegt. \\
+    Für den sequenziellen Zugriff setzt sich die Zugriffszeit durch die Track-to-Track-Suchzeit, die Anzahl an Sektoren pro Spur, die Anzahl an Sektoren pro Block  und der Anzahl an zu suchenden Blöcken zusammen.
+    \item \textbf{Gegeben sei eine Festplatte mit folgenden Eigenschaften.}\bigskip\\
+    \begin{tabular}{|c|c|}
+        \hline
+        Eigenschaften & 8 Köpfe, 2 Magnetplatten, 1024 Bytes/Sektor \\
+        \hline
+        Kapazität & 80 GB\\
+        \hline
+        Rotationsgeschwindigkeit & 4000rpm\\
+        \hline
+        Mittlere Suchzeit & 8 ms\\
+        \hline
+        Transferrate & 20MB/s\\
+        \hline
+    \end{tabular}\bigskip\\
+    \textbf{Wie hoch ist die Zugriffsdauer auf einen Block der Größe von 8KB?:}
+    
+    $t_s=8ms$\\
+    $t_r=(\frac{1}{4000 rpm}\cdot 60 \cdot 1000 \cdot \frac{1}{2})=7,5ms$\\
+    $t_{tr} = \frac{8KB}{20000KB/s} = 0.0004 s = 4ms$\\\\
+    $t=t_s+t_r+t_{tr}=8ms+7,5ms+4ms=19,5ms$\\
+    Die Zugriffsdauer auf einen Block der Größe 8KB beträgt 19,5ms.
+    \item \textbf{Wir wollen 100 Blöcke von je 8KB lesen. Die Blöcke liegen nicht direkt hintereinander.}\\\textbf{Ist eine der beiden Zugriffsarten besser geeignet?}
+    
+    Da sequentieller Zugriff schneller als Wahlfreier Zugriff ist, bleibt dieser hier die bessere Methode.
+    \item \textbf{Die Blöcke liegen (wie oben) nicht direkt hintereinander. Unsere Track-to-Track Suchzeit beträgt 1ms. Ein Block mit 8KB benötigt 16 Sektoren.}\\\textbf{Berechnen Sie den Zugriff auf die 100 Blöcke.}
+    
+    $t = t_s + t_r + 100 \cdot t_{tr} + 16 \cdot \frac{100}{63} \cdot 1ms = 440.89ms$
+\end{enumerate}
+\section{Verdrängungsstrategien / Paging}
+\begin{enumerate}
+    \item \textbf{LRU:}
+    
+    Diese Strategie ist am sinnvollsten, wenn man kurzfristig bereits entfernte (unpin) Seiten doch noch benötigt, da sich hier eine Verdrängungswarteschlange bildet oder es eine kleine Datenbasis gibt, welche kleiner als der Puffer ist und man diese ständig im Puffer halten möchte.\\
+    Ein konkreter Anwendungsfall wäre eine Kassendatenbank im Kino, da hier wenige Seiten häufig benötigt werden (Preisliste).
+    \item \textbf{LRU-k:}
+    
+    LRU-k unterscheidet besser zwischen häufiger und weniger häufig referenzierten Seiten.\\Anwendung könnte dies in einem Warenwirtschaftssystem finden, bei dem gewisse Werte (z.B. Mehrwertsteuer) häufig gebraucht werden, wohingegen große Artikellisten schnell wechseln können.
+    \item \textbf{MRU:}
+    
+    Die MRU-Strategie ist sinnvoll, wenn Daten die länger nicht gebraucht wurden eine größere Wahrscheinlichkeit haben aufgerufen zu werden.\\
+    Sinnvoll könnte man diese Strategie in einem Krankenhaus anwenden, da Patienten die lange nicht untersucht wurden höchstwahrscheinlich bald untersucht werden.
+    \item \textbf{Random:}
+    
+    Diese Strategie macht am meisten Sinn, wenn man weiß das man die Daten nicht ein zweites mal braucht. Somit wird es unwichtig welche Daten man nach ihrem lesen rausschmeißt.\\
+    Ein Anwendungsbeispiel wäre eine Bücherdatenbank für E-Books, welche das komplette Buch sequentiell auf einen Client überträgt. Da ein Textabschnitt nicht doppelt gesendet werden muss, werden die Daten nach dem ersten lesen nicht mehr gebraucht. ($Puffer << Buch$)
+\end{enumerate}
+
+\end{document}

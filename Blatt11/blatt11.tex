@@ -1,0 +1,44 @@
+\documentclass{scrartcl}
+\include{uses}
+
+\DBTitel{11}
+
+\begin{document}
+
+\maketitle
+
+\section{Verständnisfragen}
+\begin{enumerate}
+    \item \textbf{Selektionsprädikate so früh wie möglich anzuwenden ist eine Form der Optimierung.}
+
+    Diese Aussage ist korrekt, da ein möglichst frühes Selektieren die Menge der zu bearbeitenden Tupel verringert und somit bessere Performance liefert.
+    \item \textbf{Das Umschreiben (Rewriting) von Anfragen zur Optimierung geschieht unabhängig von den Daten der Datenbank.}
+
+    Diese Aussage ist auch richtig, denn so ist Rewriting definiert.
+    \item \textbf{Datenabhängige Optimierung erfolgt beispelsweise durch Abschätzung der Selektivität}
+
+    Diese Aussage ist korrekt, da die Kostenfunktion abhängig vom Index auf der entsprechenden Tabelle ist (wenn es einene gibt).
+    \item \textbf{$| R \cap S |\leq min\{| R |, | S |\}$ ist die beste korrekte Oberabschätzung zweier typkompatibler Tabellen R, S}
+    
+    Diese Aussage ist korrekt, denn die Kardinalität eines Schnittes kann maximal so groß werden wie die kleinste Kardinalität der beiden geschnittenen Mengen. Ohne mehr über den Tabelleninhalt zu wissen, kann man dies auch nicht besser Abschätzen, da im allgemeinen Fall immer $R\subseteq S$ oder $S\subseteq R$ gelten könnten.
+    \item \textbf{Beim Umschreiben (Rewriting) werden WHERE-Klauseln niemals verlängert}
+    
+    Diese Aussage ist falsch, da es beim eliminieren eines teuren Operators dazu kommen kann, dass eine Klausel zwar länger, aber einfacher zu berechnen ist.
+\end{enumerate}
+\section{Bitmap-Index}
+\begin{enumerate}
+    \item   Stammkunde:\\$<$Stammkunde, 0110101001$>$, \\$<$Kein Stammkunde, 1001010110$>$
+    
+            Art:\\$<$Hund, 0110000000$>$,\\$<$Katze, 1000010001$<$,\\$<$Hase, 0001100000$>$,\\$<$Pferd, 0000001110$>$
+            
+            Behandlung in:\\$<$Kleintierpraxis, 1111110001$>$\\$<$Großtierpraxis, 0000001110$>$
+    \item Da die Art des Tieres den Behandlungsort impliziert, könnte man diesen Index weglassen und stattdessen die Arten auf die Behandlungsstätten mappen.
+\end{enumerate}
+\section{4-Wege Verbund}
+Man wählt aus den vier Relationen einen ($R_d$) aus und prüft dann $R_d \bowtie \{R_a, R_b, R_c\}$ und $\{R_a, R_b, R_c\}\bowtie R_d$\\Dies kann man 4 mal machen. Somit ergeben sich 8 Plänen aus Phase 3.
+
+Man partitioniert die Menge $\{R_a, R_b, R_c, R_d\}$ in zwei gleichgroße Partitionen $P_1$ und $P_2$ und überprüft dann $P_1 \bowtie P_2$ und $P_2 \bowtie P_1$.\\
+Da es 3 verschiedene Möglichkeiten gibt eine Menge mit 4 Elementen so zu partitionieren ergeben sich 6 Plänen aus Phase 2.
+
+Somit kommt man insgesamt auf $8+6=14$ Pläne.
+\end{document}

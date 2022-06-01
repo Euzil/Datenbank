@@ -1,0 +1,68 @@
+\documentclass{scrartcl}
+\include{uses}
+
+\DBTitel{1}
+
+\begin{document}
+
+\maketitle
+
+\section{Verständnisfragen zum ER-Modell}
+\begin{enumerate}
+    \item Das ist falsch. Ein Dieselfahrzeug ist keine Generalisierung sondern eine Spezialisierung eines Fahrzeug. Denn nicht jedes Fahrzeug ist ein Dieselfahzeug. 
+    \item Das ist falsch. Der Entitätstyp Mader stünde in einer is-a Beziehung zu Fleischfresser, könnte jedoch auch in der Beziehung wird-gefressen zum Fleischfresser stehen, da Mader z.B. von Greifvögeln gefressen werden.
+    \item Das ist wahr. Eine Superklasse ist immer eine Teilmenge der darunterliegenden Klasse. Da eine Menge stets Teilmenge von sich selbst ist, ist auch eine Klasse stets ihre eigene Superklasse.
+    \item Das ist wahr. Analog zu c.
+    \item Das ist wahr. Als Beispiel nehme man das ER-Modell aus Aufgabe 2. Man könnte von der Relation fährt eine Beziehung Sonderfahrt ableiten, welche zusätzlich noch das Attribut Grund enthält. Diese würde dann, wie bei Entitäten, das Fahrdatum erben.
+    \item Das ist wahr. Es können auch mehrere Attribute einen Schlüssel ergeben.
+    \item Das ist falsch. Wenn die Entität Airbag in Teil-von Beziehung zu der Entität Auto steht, so steht er nicht automatisch in einer is-a Relation zum Auto.
+\end{enumerate}
+
+\section{ER-Modelle versprachlichen}
+
+\renewcommand{\theenumi}{\nums}
+\begin{itemize}
+    \item Es gibt 2 Entitäten: Lockführer und Fahrt.
+    \item Lockführer wird beschrieben durch:
+    \begin{enumerate}
+        \item eine Lockführernummer
+        \item eine Lockführername
+    \end{enumerate}
+    Die Lockführernummer ist der Primärschlüssel des Lockfürer.
+    \item Fahrt wird beschrieben durch:
+    \begin{enumerate}
+        \item der Startort
+        \item der Zielort
+        \item einen Fahrtcode
+    \end{enumerate}
+    Der Fahrtcode ist der Primärschlüssel des Entitätstyps Fahrt.
+    \item Zwischen Lockfürer und Fahrt ist eine Assziation “fährt”, die mit Fahrtdatum beschrieben wird. Lockführernummer und Fahrtcode sind Fremdschlüssel bei “fährt”.
+    \item Funktionalitätsangaben: Einem Lockfürer können n Fahrten zugeordnet werden, einer Fahrt jedoch nur einem Lockführer. Folglich kann ein Lockführer mehrere Fahren machen, aber eine Fahrt kann nur von einem Lockführer gefahren werden. 
+\end{itemize}
+\begin{tikzpicture}
+\node[ent] at (0,0) (lf) {Lockführer};
+\node[att, above=of lf] (lfnr) {\underline{Lockführernummer}};
+\node[att,below=of lf] (lfnm) {Lockführername};
+\node[rel, right=of lf] (f) {fährt};
+\node[att,below=of f] (fdt) {Fahrtdatum};
+\node[ent, right=of f] (frt) {Fahrt};
+\node[att, above=of frt] (frtcd) {\underline{Fahrtcode}};
+\node[att, right=of frt] (frtso) {Startort};
+\node[att, below right=of frt] (frtzo) {Zielort};
+\node[rel, below=of frt] (fm) {fährt mit};
+\node[ent, below=of fm] (fg) {Fahrgast};
+
+\path[-]
+    (lf) edge (lfnr)
+    (lf) edge (lfnm)
+    (lf) edge node[above] {1} (f)
+    (f) edge node[above] {N} (frt)
+    (f) edge (fdt)
+    (frt) edge (frtcd)
+    (frt) edge (frtso)
+    (frt) edge (frtzo)
+    (frt) edge node[right] {1} (fm)
+    (fg) edge  node[right] {N} (fm);
+\end{tikzpicture}
+
+\end{document}

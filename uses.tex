@@ -1,0 +1,79 @@
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{minted}
+\usepackage{listings}
+\usepackage{xcolor}
+\usetikzlibrary{positioning, shapes}
+
+\KOMAoptions{
+    parskip=full
+}
+
+\tikzset{
+    rel/.style={
+        shape=diamond, draw=black,aspect=2, scale=1.5
+    },
+    att/.style={
+        shape=ellipse, draw=black,inner sep=1, minimum width=0
+    },
+    ent/.style={
+        shape=rectangle, draw=black, scale=1.7
+    }
+}
+
+\newcommand{\DBTitel}[1]{
+    \title{Datenbanken\\Blatt #1}
+    \author{Youran Wang, 719511, RAS\\
+        Paul Otto Reese, 723947, IT-Security\\
+       Tim Hardow, 738356, Informatik\\Gruppe 4}
+}
+
+
+\let\nums\theenumi
+\renewcommand{\theenumi}{\alph{enumi}}
+
+\newcommand{\todo}{{\LARGE {\color{red}\textbf{TODO}}}}
+
+\newcommand{\qed}[0]{
+        {{\hfill $\square$}}
+}
+
+\lstset{
+   backgroundcolor=\color{lightgray},
+   extendedchars=true,
+   basicstyle=\footnotesize\ttfamily,
+   showstringspaces=false,
+   language=SQL,
+   showspaces=false,
+   numbers=left,
+   numberstyle=\footnotesize,
+   numbersep=9pt,
+   tabsize=2,
+   breaklines=true,
+   showtabs=false,
+   captionpos=b,
+   mathescape=false,
+   stringstyle=\color{red}\ttfamily,
+   literate={ö}{{\"o}}1
+           {Ö}{{\"O}}1
+           {ä}{{\"a}}1
+           {Ä}{{\"A}}1
+           {ü}{{\"u}}1
+           {Ü}{{\"U}}1
+           {ß}{{\ss}}1
+}
+
+\lstdefinelanguage{sql}{
+	keywords={SELECT, FROM, WHERE, UPDATE, JOIN, CREATE, VIEW, INSERT, DOMAIN, CONSTRAINT, CHECK, VALUE},
+	keywordstyle=\color{blue}\bfseries,
+  	ndkeywords={AND, OR, AS, MIN, MAX, AVG, IN, STRING, INTEGER},
+  	ndkeywordstyle=\color{red}\bfseries,
+  	identifierstyle=\color{black},
+  	comment=[l]{\#},
+  	commentstyle=\color{purple}\ttfamily
+}

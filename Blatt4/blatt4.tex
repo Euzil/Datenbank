@@ -1,0 +1,58 @@
+\documentclass{scrartcl}
+\include{uses}
+
+\DBTitel{4}
+
+\begin{document}
+
+\maketitle
+
+\section{Verständnisfragen} 
+\begin{tabular}{c|p{13cm}}
+    Nummer & Antwort\\
+    \hline 
+    a & Das stimmt, denn FROM gibt an, aus welcher Tabelle die Anfrage sein soll und SELECT gibt an, welche Zeilen gemeint sind. Sind alle Zeilen gemeint, wird dies mit einem Stern (*) gekennzeichnet.\\
+    \hline
+    b & Diese Aussage stimmt auch, denn die Closed-World-Annahme behauptet, dass wenn etwas keinen Wert hat, dieser auch nicht existiert. Es gibt Anwendungsfälle, bei denen beispielsweise nicht klar ist, ob dieser Wert einfach nicht gemessen wurde oder dieser Wert gar nicht existiert. Beispiel: Eine Datenbank enthält verschiedene Automodelle mit ihren Technischen Eigenschaften. Für die Zeile Kraftstoffverbrauch kann NULL bedeuten, dass der Wert nicht gemessen wurde, oder in der entsprechenden Zeile des NULL-Wertes ein E-Auto zu finden ist, welches einfach kein Kraftstoff verbrauch besitzt. Daher wird durch NULL-Werte die Closed-World-Annahme abgeschwächt.\\
+    \hline
+    c & Nein, das ist falsch. Man erhält als Output eine Tabelle, in der die Zeilen in Gruppen aufgeteilt sind.\\
+    \hline 
+    d & Nein, es ist auch möglich beispielsweise möglich natural join ohne explizite Verwendung von Variablen zu verwenden, indem man diese direkt in der FROM-Klausel verwendet.\\
+    \hline
+    e & Ja, wenn ein Wert fehlt wird dieser mit NULL aufgefüllt, wenn nicht bei der Tabellenerzeugung ein anderer Standardwert angegeben wurde.\\
+    \hline 
+    f & Nein, eine SQL-Anfrage über einer Tabelle liefert beispielsweise als Output alle Spalten der Tabelle, wenn man ohne Projektion Anfragt.\\
+\end{tabular}
+\section{Umgang mit SQL-Anfragen} 
+\subsection{}
+\begin{lstlisting}[language=sql]
+SELECT MatrNr 
+FROM hören, Professoren, Vorlesungen, Studenten 
+WHERE Professoren.Name='Sokrates'
+    and Vorlesungen.gelesenVon=Professoren.PersNr
+    and hören.VorlNr=Vorlesungen.VorlNr
+    and Studenten.MatrNr=hören.MatrNr
+\end{lstlisting}
+\subsection{}
+\begin{tabular}{c|c|c}
+    Name & Name & Fachgebiet \\
+    \hline
+    \hline 
+    Sokrates & Platon & Ideenlehre \\
+    Sokrates & Aristoteles & Syllogistik \\
+    Russel & Wittgenstein & Sprachtheorie \\ 
+    Russel & Spinoza & Gott und Natur \\
+\end{tabular}
+\section{NULL-Values und deren Bedeutung}
+\begin{enumerate}
+    \item \textbf{Erläutern Sie (mit Beispielen) die Verwendung von NULL-Werten in einer Datenbank.}
+    
+    Wenn ein Wert für ein Attribut in einer Zeile nicht bekannt ist, kann dieser durch ein NULL-Wert aufgefüllt werden, sodass diese Zelle nicht gänzlich leer ist. Beispiel: In einem Online-Shop muss jeder Kunde sich registrieren und die entsprechenden Daten werden in einer Datenbank gespeichert. Manche Textfelder sind Pflichtfelder, die der Kunde ausfüllen muss, andere hingegen kann er freiwillig ausfüllen. Wenn die eingegebenen Daten in die Datenbank eingetragen werden, werde alle leer gelassenen Felder mit NULL aufgefüllt. 
+    \item \textbf{Kann es vorkommen, dass in einer Zeile einer Tabelle mehr als ein Attribut den NULL-Wert hat?}
+
+    Ja dies kann vorkommen. 
+    \item \textbf{Könnte es sinnvoll sein, SQL so zu erweitern, dass verschiedene NULL-Werte NULL$_1$, NULL$_2$ genutzt werden können?}
+
+    Ja das kann sehr sinnvoll sein, denn wenn beispielsweise nicht klar ist, ob ein NULL-Wert für ein nicht vorhanden sein von Werten oder von nicht gemessen sein von Werten steht, kann es hilfreich sein, diese Gründe für den Einsatz von einem NULL-Wert zu unterscheiden. Diese unterschiedlichen Null-Werte sollten dann allerdings intuitivere Namen erhalten, die den speziellen Fall genauer beschreiben (z.B. UNDEFINED)
+\end{enumerate}
+\end{document}

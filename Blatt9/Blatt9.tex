@@ -1,0 +1,51 @@
+\documentclass{scrartcl}
+\include{uses}
+
+\DBTitel{9}
+
+\begin{document}
+
+\maketitle
+
+\section{Verständnisfragen}
+\begin{enumerate}
+    \item \textbf{Zu einem logischen Operator kann es mehr als einen physikalischen Operator geben, welche jeweils eine ähnliche Performanz aufweisen.}
+
+    Diese Aussage ist falsch, da es zwar zu einem logischen Operator mehrere physikalische Operatoren geben kann, diese sich jedoch wesentlich in der Performanz unterscheiden können.
+    \item \textbf{Die Bedingung für die Hash-Überdeckung ist logisch strenger als die für B+-Indexe.}
+
+    Da bei der Hash-Überdeckung nur Gleichheitsprädikate funktionieren, B+-Indexe jedoch beliebige Prädikate abdecken, ist diese Aussage korrekt.
+    \item \textbf{WHERE CAST(trackingnumber as CHAR(12)) = ‘F467-41BF-8B’ ist eine sargable Bedingung}
+    
+    Da es sich hier um ein Gleichheitsprädikat handelt, enthält der gegebene SQL-Befehl eine sargable Bedingung. Somit ist die Aussage korrekt.
+    \item \textbf{Bei der Pipeline-orientierten Verarbeitung steigt die Anzahl der zu puffernden Zwischenergebnisse.}
+    
+    Diese Aussage ist falsch, da bei der Pipeline-orientierten Verarbeitung die Ergebnisse so früh wie möglich weiter verarbeitet werden, ohne sie dafür zwischen zu speichern, reduzieren sich die zu puffernden Ergebnisse.
+\end{enumerate}
+\section{Überdeckung}
+\begin{tabular}{|c|c|c|}
+\hline
+    Bedingung & H(a,b,c) & B$^+$(b,d,a)\\
+\hline
+\hline
+    $a = 5$ AND $c = 5$ & nein & nein\\
+\hline
+    $a = 4$ AND $b > 5$ AND $c = 9$ & ja & nein \\
+\hline
+    $b > 5$ AND $b < 3$ & nein & ja\\
+\hline
+\end{tabular}
+\section{Beschreibung Join-Verfahren}
+\begin{enumerate}
+    \item \textbf{Nested Loop Join}
+    
+    Bei diesem Verfahren wird einfach mittels zweier verschachtelter Schleifen jede mögliche Tupel-Kombination gegen die Join-Bedingung geprüft.
+    \item \textbf{Sort-Merge Join}
+    
+    Beim Sort-Merge Join werden die Tabellen sortiert und mit ``Pointern'' durchgegangen bis die Pointer auf gleiche Zellenwerte zeigen. Dann werden die Zeilen mit gleichen Schlüsseln dem Ergebnis zugefügt. Wenn man so weit gelaufen ist, dass die Zellen auf welche die Pointer zeigen wieder ungleich sind, beginnt der Prozess an den neuen Pointerstellen von vorn.
+    \item \textbf{Hash Join}
+    
+    Die Funktionsweise des Hash Join basiert auf der Partitionierung der Tabellen mittels einer Hashfunktion. Nachdem die Tabellen partitioniert wurden, wird für jede Partition der ersten Tabelle eine Hashtabelle gebaut, mit welche dann eventuelle Treffer des Join-Kriteriums in der korrespondierenden Partition der anderen Tabelle geprüft werden.
+\end{enumerate}
+
+\end{document}

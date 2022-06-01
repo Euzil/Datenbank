@@ -1,0 +1,64 @@
+\documentclass{scrartcl}
+\include{uses}
+
+\DBTitel{12}
+
+\begin{document}
+
+\maketitle
+
+\section{Verständnisfragen}
+\begin{enumerate}
+    \item \textbf{Der Plan $S=<r_1(A), r_1(A), r_2(A), r_1(A)>$ ist seriell}
+    
+    Dieser Plan ist nicht seriell, da nach $r_2(A)$ wieder $r_1(A)$ folgt. Damit folgen alle Schritte der Transaktion $r_1$ nicht ohne andere Transaktionen aufeinander. Daher ist die Aussage falsch.
+    \item \textbf{Der Plan $s=<r_1(A), r_1(A), r_2(A), r_1(A)>$ ist serialisierbar}
+    
+    Diese aussage ist auch falsch, da $r_1(A)$ nicht an $r_2(A)$ vorbeigeschoben werden kann, da es sonnst einen Konflikt gäbe.
+    \item \textbf{Eine Dirty-Read-Anomalie tritt auf, wenn eine Transaktion geänderte Werte unkontrolliert überschreibt}
+
+    Da bei einer Dirty-Read Anomalie nicht geprüft wurde, ob sich der Wert mittlerweile geändert hat (z.B. durch ein Rollback) ist die Aussage korrekt, da unkontrolliert in die DB geschrieben wird.
+    \item \textbf{Wenn ein Serialisierungsgraph $G_S$ einen Kreis enthält, dann ist der Plan $S$ nicht serialisierbar}
+    
+    Diese Aussage ist korrekt, denn wenn ein Serialisierungsgraph einen Kreis enthält, dann heißt dies, dass in dem Plan auf Ergebnissen einer Transaktion in einer anderen Transaktion gearbeitet wird und dessen Ergebnisse wiederum in einem späteren Schritt von der ersteren Transaktion verwendet werden. Somit kann kein Schritt verschoben werden, was wiederum die Definition der (nicht) serialisierbarkeit ist. 
+    \item \textbf{Die topologische Sortierung eines Graphen ist eindeutig}
+    
+    Da eine Topologische Sortierung lediglich eine Ordnung auf einem gerichteten azyklischen Graph darstellt, gibt es meist mehrere Möglichkeiten diesen zu Ordnen. Einen binären Baum mit Knoten A als Wurzel und B und C als Kinder könnte man durch $A < C < B$ oder auch durch $A < B < C$ ordnen. Somit ist die Aussage falsch.
+\end{enumerate} 
+\section{Serialisierbarkeit}
+\begin{enumerate}
+    \item Serialisierbarkeitsgraphen:
+    \begin{center}
+    \begin{tikzpicture}
+    \node[circle,draw=black] at (0,0) (T1) {$T_1$};
+    \node[circle,draw=black] at (2,0) (T2) {$T_2$};
+    \node[circle,draw=black] at (1,1.4) (T3) {$T_3$};
+    \path[->]
+    (T3) edge[bend left] (T1)
+    (T1) edge[bend left] (T3);
+    \end{tikzpicture}
+    \end{center}
+    \item Serialisierbarkeit:
+    
+    Der Plan ist nicht serialisierbar, da sein Serialisierbarkeitsgraph einen Zyklus enthält.
+    \item 
+    \begin{enumerate}
+        \item \textbf{Reflexivität}
+        
+        Zwar kann eine Transaktion in Relation zu sich selbst stehen, jedoch ist dies nicht zwingend der Fall und somit ist die Relation nicht reflexiv.
+        \item \textbf{Symmetrie}
+        
+        Die Relation kann nicht symmetrisch sein, da sonst alle Pläne nicht serialisierbar wären. Es kann aber sein, dass $T_1$ vor $T_2$ fertig sein muss aber nicht umgedreht. Somit ist die Relation nicht symmetrisch.
+        \item \textbf{Transitivität}
+        
+        Da eine Transaktion die von einer anderen Abhängt nicht durchgeführt werden darf bevor diese durchgeführt wurde, kann sie auch nicht durchgeführt werden wenn besagte Transaktion von einer dritten abhängt. Somit stehen die ursprüngliche und die dritte Transaktion ebenfalls in Relation. Deshalb ist die Relation transitiv.
+    \end{enumerate}
+\end{enumerate}
+\section{Topologische Sortierung}
+Alle möglichen topologischen Sortierungen sind:
+\begin{itemize}
+    \item $T_2<T_1<T_3<T_4<T_5$
+    \item $T_2<T_3<T_1<T_4<T_5$
+\end{itemize}
+
+\end{document}

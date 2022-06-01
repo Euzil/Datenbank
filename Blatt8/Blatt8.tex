@@ -1,0 +1,70 @@
+\documentclass{scrartcl}
+\include{uses}
+
+\DBTitel{8}
+
+\begin{document}
+
+\maketitle
+
+\section{Verständnissfragen }
+\begin{enumerate}
+    \item \textbf{Der Verlierer-Baum (“tree of losers”) ist eine Datenstruktur, mit der das k-Wege-Mischen (k-merge sort) zeitoptimiert werden kann.}
+    
+    Diese Aussage ist falsche, da der Tree of Loosers das kleinste Element herausgibt, erreicht man keinen Vorteil durch das einsetzen dieser Datenstruktur beim k-Mergesort. Allerdings gibt es andere Sortierverfahren bei denen soeine Datenstruktur von Vorteil ist.
+    \item \textbf{Beim “replacement sort” wird durch das Erhöhen der initialen Länge der Läufe auch die Anzahl der Mischdurchgänge erhöht.}
+    
+    Die Aussage ist falsch, da beim vergrößern der Lauflänge weniger aber dafür längere Mischdurchgänge durchgeführt werden müssen.
+    \item \textbf{Das 2-Wege-Mischverfahren greift auf ein hauptspeicherbasiertes Sortierverfahren zurück.}
+    
+    Da bei Mergesort die Daten durch Zerteilen im Hauptspeicher sortiert werden, kann man hier von einem hauptspeicherbasierten Sortierverfahren sprechen.
+\end{enumerate}
+\section{Merge-Sort}
+\begin{enumerate}
+    \item \textbf{Beschreiben Sie die Funktionsweise vom Zwei-Wege-Mischsortieren.}
+    
+    Merge Sort funktioniert nach dem teile und hersche Prinzip. Es werden die zu sortierenden Elemente in kleine Pakete aufgeteilt und diese einzeln erst sortiert. Dann werden jeweils zwei Pakete zusammengefügt und dann diese zusammengefügten Pakete sortiert. Dies geschieht solange, bis keine Pakete mehr zusammengefügt werden können. Es wird so das Problem immer weiter in kleinere Probleme aufgeteilt, bis diese einfach zu lösen sind.
+    \item \textbf{Führen Sie eine Merge-Sort-Sortierung (Basisversion) per Hand durch.}
+    input:\\
+    (39, 23) (15, 6) (86, 73) (3, 42) (91, 51) (84, 77) (25, 14) (80, 13) (72, 20) (62, 46)\\
+    1-page runs: \\
+    (23,39) (6, 15) (73, 86) (3, 42) (51, 91) (77, 84) (14, 25) (13, 80) (20, 72) (46, 62)\\
+    2-page runs: \\
+    (6, 15, 23, 39) (3, 42, 73, 86) (51, 77, 84, 91) (13, 14, 25, 80) (20, 46, 62, 72)\\
+    3-page runs: \\
+    (3, 6, 15, 23, 39, 42, 73, 86) (13, 14, 25, 51, 77, 80, 84, 91) (20, 46, 62, 72)\\
+    4-page runs: \\
+    (3, 6, 13, 14, 15, 23, 25, 39, 42, 51, 73, 77, 80, 84, 86, 91) (20, 46, 62, 72)\\
+    5-page runs: \\
+    (3, 6, 13, 14, 15, 20, 23, 25, 39, 42, 46, 51, 62, 72, 73, 77, 80, 84, 86, 91)\\
+    \item \textbf{Wie viele Durchgänge wurden benötigt? Geben Sie die benötigte Formel an.}
+    \[|Durchgaenge|=1+\lceil log_2(N)\rceil\]
+    Wir brauchen damit laut der Formel: $1+\lceil log_2(20)\rceil = 1+5 = 6$ Durchgänge.
+    \item \textbf{Warum kann in der 2-Wege-Mischsortierung (bei Nutzung von B Puffern) die Such- und Rotationsverzögerung am Anfang vernachlässigt werden, in den Merge Durchgängen jedoch nicht?}
+    
+    Am Anfang können die Seiten sequenziell gelesen werden. In den Merge Durchgänge muss jedoch wahlfrei zugegriffen werden. Somit müssen hier dann die Such- und Rotationsverzögerungen betrachtet werden.
+\end{enumerate}
+\section{Dauer des Sortiervorgangs}
+Durchgänge: $1+\lceil log_{B-1}\lceil N/B\rceil\rceil=1+\lceil log_{999}\lceil 10^6/10^3\rceil\rceil=1+\lceil log_{999} 1000 \rceil = 3$\\
+I/O-Operationen: \[2 \cdot \left\lceil \frac{N}{B} \right\rceil \cdot \left(1+\left\lceil \log_{\left\lceil \frac{B}{b} \right\rceil - 1} \left\lceil \frac{N}{\left\lceil \frac{B}{b}\right\rceil}\right\rceil\right\rceil\right)\]
+\[= 2 \cdot \left\lceil \frac{10^6}{10^3} \right\rceil \cdot \left(1+\left\lceil \log_{\left\lceil \frac{10^3}{32} \right\rceil - 1} \left\lceil \frac{10^6}{\left\lceil \frac{10^3}{32}\right\rceil}\right\rceil\right\rceil\right)\]
+\[= 10^4\]
+
+Lesen:
+\[t_s + t_r + 1000 \cdot t_{tr} + 16 \cdot \frac{1000}{63} \cdot t_{track2track}\]
+\[= 10ms + 4,17ms + 1000 \cdot 0,16ms + 16 \cdot \frac{1000}{63} \cdot 1ms\]
+\[= 428,14ms\]
+
+Merge:
+\[10^4 \cdot 2 \cdot (t_s + t_r)\]
+\[=10^4 \cdot 2 \cdot 14,17ms\]
+\[=283400ms\]
+
+Transfer:
+\[10^4 \cdot 3 \cdot t_{tr}\]
+\[=10^4 \cdot 3 \cdot 0,16ms\]
+\[= 4800ms\]
+
+Gesamt:
+\[428,14ms + 283400ms + 4800ms = 288628,14ms = 288,62814s \approx 4,8min\]
+\end{document}
